@@ -16,7 +16,43 @@ Route::get('/', function()
 	return View::make('hello');
 });
 
-Route::get('/authtest', array('before' => 'auth.basic', function()
+Route::get('create', function()
 {
-    return View::make('hello');
-}));
+    $user = Sentry::createUser(array(
+        'email'     => 'joe@doe.com',
+        'password'  => 'secret',
+        'activated' => true,
+    ));
+
+    return 'User Created';
+});
+
+Route::post('login',function()
+{
+    try
+    {
+        $user = Sentry::authenticate(Input::all(), false);
+
+        $token = hash('sha256',Str::random(10),false);
+
+        $user->api_token = $token;
+
+        $user->save();
+
+        return Response::json(array('token' => $token, 'user' => $user->toArray()));
+    }
+    catch(Exception $e)
+    {
+        App::abort(404,$e->getMessage());
+    }
+});
+
+Route::group(array('prefix' => 'api', 'before' => 'auth.token'), function() {
+
+      Route::get('/', function() {
+        return "Protected resource";
+      });
+      
+      Route::resource('data_user', 'DataUserController');
+
+});  
