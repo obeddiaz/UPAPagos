@@ -33,7 +33,7 @@ Route::post('login',function()
     {
         $user = Sentry::authenticate(Input::all(), false);
 
-        $token = hash('sha256',Str::random(10),false);
+        $token = hash('sha256',uniqid(),false);
 
         $user->api_token = $token;
 
