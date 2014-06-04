@@ -6,7 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'AddApiTokenUsersTable' => $baseDir . '/app/database/migrations/2014_05_28_055724_add_api_token_users_table.php',
+    'AddApiTokenUsersTable' => $baseDir . '/app/database/migrations/2014_05_30_234955_add_api_token_users_table.php',
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
     'Boris\\Boris' => $vendorDir . '/d11wtq/boris/lib/Boris/Boris.php',
     'Boris\\CLIOptionsHandler' => $vendorDir . '/d11wtq/boris/lib/Boris/CLIOptionsHandler.php',

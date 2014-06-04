@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://localhost:8080',
+	'url' => 'http://localhost',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ return array(
 	|
 	*/
 
-	'key' => 'fMpGcpusqyKtMcMVGfzLg8UDugpKMwCn',
+	'key' => 'zEfX21GdHMcnYRVR8dTr8QJwQoE4uIst',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -186,7 +186,6 @@ return array(
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
                 'Sentry'          => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
-
 	),
 
 );

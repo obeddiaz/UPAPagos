@@ -33,7 +33,7 @@ Route::post('login',function()
     {
         $user = Sentry::authenticate(Input::all(), false);
 
-        $token = hash('sha256',uniqid(),false);
+        $token = hash('sha256',Str::random(10),false);
 
         $user->api_token = $token;
 
@@ -43,7 +43,7 @@ Route::post('login',function()
     }
     catch(Exception $e)
     {
-        App::abort(404,$e->getMessage());
+        echo $e->getMessage();
     }
 });
 
@@ -52,7 +52,27 @@ Route::group(array('prefix' => 'api', 'before' => 'auth.token'), function() {
       Route::get('/', function() {
         return "Protected resource";
       });
-      
-      Route::resource('data_user', 'DataUserController');
 
-});  
+      
+Route::filter('auth.token', function($route, $request)
+{
+    $payload = $request->header('X-Auth-Token');
+
+    $userModel = Sentry::getUserProvider()->createModel();
+
+    $user =  $userModel->where('api_token',$payload)->first();
+
+    if(!$user) {
+
+        $response = Response::json([
+            'error' => true,
+            'message' => 'Not authenticated',
+            'code' => 401],
+            401
+        );
+
+        $response->header('Content-Type', 'application/json');
+    return $response;
+    }
+
+});});  

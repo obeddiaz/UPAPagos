@@ -78,27 +78,3 @@ Route::filter('csrf', function()
 		throw new Illuminate\Session\TokenMismatchException;
 	}
 });
-
-Route::filter('auth.token', function($route, $request)
-{
-    $payload = $request->header('X-Auth-Token');
-
-    $userModel = Sentry::getUserProvider()->createModel();
-
-    $user =  $userModel->where('api_token',$payload)->first();
-
-    if(!$user) {
-
-        $response = Response::json(array(
-            
-                    'error' => true,
-            'message' => 'Not authenticated',
-            'code' => 401),
-            401
-        );
-
-        $response->header('Content-Type', 'application/json');
-    return $response;
-    }
-
-});
